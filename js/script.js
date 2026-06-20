@@ -4,6 +4,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ---------- Configurações WhatsApp ---------- */
+  const phoneNumber = "5511943934176";
+  const message = "Olá! Vi seu site e gostaria de conversar sobre...";
+
   /* ---------- Ano no rodapé ---------- */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -121,5 +125,19 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
+
+  /* ---------- Gerar QR Code WhatsApp ---------- */
+  const qrcodeContainer = document.getElementById('qrcode');
+  if (qrcodeContainer && typeof QRCode !== 'undefined') {
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    new QRCode(qrcodeContainer, {
+      text: whatsappURL,
+      width: 180,
+      height: 180,
+      colorDark: "#052B2A",
+      colorLight: "#F7F2E9",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
 
 });

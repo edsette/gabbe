@@ -695,11 +695,16 @@ header.scrolled .nav-toggle span::after{ background: var(--petroleo); }
   position:relative;
 }
 .contact .wrap{
-  display:grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 70px;
+  display:flex;
+  flex-direction:column;
+  gap: 60px;
 }
 
+.contact-header{
+  text-align:center;
+  max-width: 600px;
+  margin: 0 auto;
+}
 .contact-title{
   font-family: var(--display);
   font-size: clamp(2.3rem, 4.4vw, 3.4rem);
@@ -713,114 +718,161 @@ header.scrolled .nav-toggle span::after{ background: var(--petroleo); }
   font-size: 1rem;
   line-height: 1.8;
   color: rgba(14,23,21,0.75);
-  max-width: 400px;
-  margin-bottom: 40px;
+  margin-bottom: 0;
   font-weight: 300;
 }
 
-.contact-channels{
-  display:flex;
-  flex-direction:column;
-  gap: 20px;
+/* Card WhatsApp Central */
+.contact-main{
+  display:grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items:center;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
 }
-.contact-channel{
+
+.whatsapp-card{
+  background: linear-gradient(135deg, #075E54 0%, #128C7E 100%);
+  border-radius: 20px;
+  padding: 50px 40px;
+  text-align:center;
+  color: white;
+  box-shadow: 0 30px 60px rgba(7,94,84,0.3);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.whatsapp-card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 40px 80px rgba(7,94,84,0.4);
+}
+
+.whatsapp-icon-large{
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 30px;
+  background: white;
+  border-radius: 50%;
   display:flex;
   align-items:center;
-  gap: 16px;
+  justify-content:center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
-.contact-channel-icon{
-  width: 44px; height:44px;
-  border-radius:50%;
-  border: 1px solid rgba(7,59,58,0.25);
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0;
-  color: var(--petroleo);
-  transition: background .3s ease, border-color .3s ease, color .3s ease;
+.whatsapp-icon-large svg{
+  width: 60px;
+  height: 60px;
+  color: #075E54;
 }
-.contact-channel:hover .contact-channel-icon{
-  background: var(--terracota);
-  border-color: var(--terracota);
-  color: var(--bege-claro);
+
+.whatsapp-card h3{
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: white;
 }
-.contact-channel-icon svg{ width:18px; height:18px; }
-.contact-channel-text{ display:flex; flex-direction:column; }
-.contact-channel-text span{
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(14,23,21,0.45);
-}
-.contact-channel-text strong{
-  font-size: 0.98rem;
+
+.whatsapp-number{
+  display:block;
+  font-family: var(--display);
+  font-size: 2rem;
   font-weight: 500;
-  color: var(--petroleo);
+  color: white;
+  margin-bottom: 20px;
+  text-decoration:none;
+  transition: opacity .3s ease;
+}
+.whatsapp-number:hover{
+  opacity: 0.9;
 }
 
-/* form */
-form.contact-form{
-  background: var(--bege);
-  border-radius: 10px;
-  padding: 46px;
-  display:flex;
-  flex-direction:column;
-  gap: 26px;
-}
-.field{
-  position:relative;
-  border-bottom: 1px solid rgba(7,59,58,0.3);
-  padding-bottom: 10px;
-}
-.field label{
-  position:absolute;
-  top:0; left:0;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  color: rgba(14,23,21,0.5);
-  pointer-events:none;
-  transition: transform .2s ease, color .2s ease, font-size .2s ease;
-  transform-origin: left top;
-}
-.field input, .field textarea, .field select{
-  width:100%;
-  border:none;
-  background:none;
-  font-family: var(--corpo);
+.whatsapp-message{
   font-size: 1rem;
-  color: var(--tinta);
-  padding-top: 20px;
-  resize:none;
-  appearance:none;
+  font-style: italic;
+  opacity: 0.9;
+  margin-bottom: 30px;
+  line-height: 1.6;
 }
-.field select{ cursor:pointer; }
-.field input:focus, .field textarea:focus, .field select:focus{ outline:none; }
-.field input:focus ~ label,
-.field input:not(:placeholder-shown) ~ label,
-.field textarea:focus ~ label,
-.field textarea:not(:placeholder-shown) ~ label,
-.field.has-value label{
-  transform: translateY(-16px) scale(0.85);
-  color: var(--terracota);
-}
-.field::after{
-  content:"";
-  position:absolute; left:0; bottom:-1px;
-  width:0%; height:2px;
-  background: var(--terracota);
-  transition: width .3s ease;
-}
-.field.focused::after{ width:100%; }
 
-.contact-form .btn{ align-self:flex-start; margin-top: 6px; }
-
-.form-note{
-  font-size: 0.78rem;
-  color: rgba(14,23,21,0.5);
+.btn-whatsapp{
+  background: white;
+  color: #075E54;
+  border-color: white;
+  font-weight: 500;
 }
-.form-note.success{ color: var(--terracota); font-weight:500; }
+.btn-whatsapp:hover{
+  background: #F7F2E9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.2);
+}
+
+/* QR Code */
+.qr-code-card{
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align:center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.qr-code-card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+}
+
+.qr-code-placeholder{
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 20px;
+  border-radius: 10px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.qr-code-placeholder svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.qr-text{
+  font-size: 0.9rem;
+  color: rgba(14,23,21,0.7);
+  line-height: 1.5;
+  margin: 0;
+}
 
 @media (max-width: 900px){
-  .contact .wrap{ grid-template-columns: 1fr; gap: 56px; }
-  form.contact-form{ padding: 34px 26px; }
+  .contact-main{
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+  .whatsapp-card{
+    padding: 40px 30px;
+  }
+  .whatsapp-number{
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 540px){
+  .whatsapp-icon-large{
+    width: 80px;
+    height: 80px;
+  }
+  .whatsapp-icon-large svg{
+    width: 50px;
+    height: 50px;
+  }
+  .whatsapp-card h3{
+    font-size: 1.5rem;
+  }
+  .whatsapp-number{
+    font-size: 1.4rem;
+  }
+  .qr-code-placeholder{
+    width: 150px;
+    height: 150px;
+  }
 }
 
 /* ============ FOOTER ============ */
