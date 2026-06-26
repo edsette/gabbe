@@ -156,10 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
        "01": ["serv_1.jpg", "serv_1_2.jpg", "serv_1_3.jpg", "serv_1_4.jpg"]
      ========================================================== */
   const serviceImages = {
-    "01": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"],
-    "02": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"],
-    "03": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"],
-    "04": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"]
+    "01": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg", "serv_4.jpg"],
+    "02": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg", "serv_4.jpg"],
+    "03": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg", "serv_4.jpg"],
+    "04": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg", "serv_4.jpg"]
   };
 
   function loadServiceImages() {
@@ -191,44 +191,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /**
    * Inicializa o carrossel de cada stack:
-   * - Marca a primeira imagem como ativa
-   * - Nas demais, marca como .next (vindo da direita)
-   * - Ao clicar em qualquer imagem, avança o carrossel
+   * - Imagem clicada vai para cima (classe .active), maior
+   * - As demais ficam abaixo (classe .thumb), lado a lado
    */
   function initServiceCarousels() {
     document.querySelectorAll('.service-img-stack').forEach(stack => {
       const imgs = stack.querySelectorAll('.service-img');
-      if (imgs.length === 0) return;
+      if (imgs.length < 4) return;
 
-      // Estado
-      let current = 0;
-      const total = imgs.length;
-
-      function applyClasses() {
+      function layout(activeIdx) {
         imgs.forEach((img, i) => {
-          img.classList.remove('active', 'prev', 'next');
-          if (i === current) {
+          img.classList.remove('active', 'thumb');
+          if (i === activeIdx) {
             img.classList.add('active');
-          } else if (i === (current - 1 + total) % total) {
-            img.classList.add('prev');
           } else {
-            img.classList.add('next');
+            img.classList.add('thumb');
           }
         });
       }
 
-      function advance() {
-        current = (current + 1) % total;
-        applyClasses();
-      }
-
-      // Clique em qualquer imagem avança
-      imgs.forEach(img => {
-        img.addEventListener('click', advance);
+      imgs.forEach((img, i) => {
+        img.addEventListener('click', () => layout(i));
       });
 
-      // Estado inicial
-      applyClasses();
+      // Primeira imagem como ativa
+      layout(0);
     });
   }
 
