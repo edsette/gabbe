@@ -915,9 +915,54 @@ footer .wrap{
   font-size: 0.74rem;
   letter-spacing: 0.02em;
 }
+.footer-credit{
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: rgba(234,224,210,0.5);
+  margin-top: 8px;
+}
 .footer-rule{
   border-top: 1px solid rgba(234,224,210,0.12);
   margin: 34px 0 22px;
+}
+
+/* ============ FLOATING WHATSAPP ============ */
+.floating-whatsapp{
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.floating-whatsapp:hover{
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+}
+.floating-whatsapp svg{
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+
+@media (max-width: 540px){
+  .floating-whatsapp{
+    width: 52px;
+    height: 52px;
+    bottom: 20px;
+    right: 20px;
+  }
+  .floating-whatsapp svg{
+    width: 28px;
+    height: 28px;
+  }
 }
 
 /* ============ MOBILE NAV ============ */
