@@ -41,12 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Menu mobile ---------- */
   const navToggle = document.getElementById('navToggle');
   const mainNav = document.getElementById('mainNav');
-  if (navToggle && mainNav) {
+  if (navToggle && mainNav && header) {
     navToggle.addEventListener('click', () => {
       mainNav.classList.toggle('open');
+      header.classList.toggle('nav-open');
     });
     mainNav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => mainNav.classList.remove('open'));
+      a.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        header.classList.remove('nav-open');
+      });
     });
   }
 
@@ -139,5 +143,61 @@ document.addEventListener('DOMContentLoaded', () => {
       correctLevel: QRCode.CorrectLevel.H
     });
   }
+
+  /* ==========================================================
+     IMAGENS DOS SERVIÇOS — carregamento dinâmico
+     ==========================================================
+     COMO ADICIONAR MAIS IMAGENS NO FUTURO:
+     1. Coloque os arquivos .jpg na pasta /images/
+     2. Adicione os nomes dos arquivos no array abaixo,
+        dentro do serviço correspondente.
+     
+     Exemplo — Adicionar uma 4ª imagem ao Serviço 01:
+       "01": ["serv_1.jpg", "serv_1_2.jpg", "serv_1_3.jpg", "serv_1_4.jpg"]
+     ========================================================== */
+  const serviceImages = {
+    "01": ["serv_1.jpg"],
+    "02": ["serv_2.jpg"],
+    "03": ["serv_3.jpg"],
+    "04": ["serv_4.jpg"]
+  };
+
+  /**
+   * Carrega as imagens nos stacks de cada serviço.
+   * Para cada serviço, a primeira imagem fica com data-index="1",
+   * a segunda com data-index="2", etc. — até 3 são exibidas empilhadas.
+   * Se houver mais de 3, as excedentes ficarão ocultas, mas ainda
+   * no DOM (basta alterar o CSS para mostrá-las se quiser).
+   */
+  function loadServiceImages() {
+    document.querySelectorAll('.service-row').forEach(row => {
+      const serviceNum = row.getAttribute('data-service');
+      const images = serviceImages[serviceNum];
+      if (!images || images.length === 0) return;
+
+      const stack = row.querySelector('.service-img-stack');
+      if (!stack) return;
+
+      // Limpa o stack (caso tenha sido populado antes)
+      stack.innerHTML = '';
+
+      // Cria um elemento <img> para cada imagem da lista
+      images.forEach((filename, idx) => {
+        const div = document.createElement('div');
+        div.className = 'service-img';
+        div.setAttribute('data-index', idx + 1);
+        
+        const img = document.createElement('img');
+        img.src = `images/${filename}`;
+        img.alt = `Serviço ${serviceNum} — imagem ${idx + 1}`;
+        img.loading = 'lazy';
+        
+        div.appendChild(img);
+        stack.appendChild(div);
+      });
+    });
+  }
+
+  loadServiceImages();
 
 });
