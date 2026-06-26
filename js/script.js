@@ -156,10 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
        "01": ["serv_1.jpg", "serv_1_2.jpg", "serv_1_3.jpg", "serv_1_4.jpg"]
      ========================================================== */
   const serviceImages = {
-    "01": ["serv_1.jpg"],
-    "02": ["serv_2.jpg"],
-    "03": ["serv_3.jpg"],
-    "04": ["serv_4.jpg"]
+    "01": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"],
+    "02": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"],
+    "03": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"],
+    "04": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"]
   };
 
   /**
