@@ -145,12 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================
-     IMAGENS DOS SERVIÇOS — carregamento dinâmico
+     IMAGENS DOS SERVIÇOS — carregamento dinâmico + click to advance
      ==========================================================
      COMO ADICIONAR MAIS IMAGENS NO FUTURO:
-     1. Coloque os arquivos .jpg na pasta /images/
-     2. Adicione os nomes dos arquivos no array abaixo,
-        dentro do serviço correspondente.
+      1. Coloque os arquivos .jpg na pasta /images/
+      2. Adicione os nomes dos arquivos no array abaixo,
+         dentro do serviço correspondente.
      
      Exemplo — Adicionar uma 4ª imagem ao Serviço 01:
        "01": ["serv_1.jpg", "serv_1_2.jpg", "serv_1_3.jpg", "serv_1_4.jpg"]
@@ -162,13 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     "04": ["serv_1.jpg", "serv_2.jpg", "serv_3.jpg"]
   };
 
-  /**
-   * Carrega as imagens nos stacks de cada serviço.
-   * Para cada serviço, a primeira imagem fica com data-index="1",
-   * a segunda com data-index="2", etc. — até 3 são exibidas empilhadas.
-   * Se houver mais de 3, as excedentes ficarão ocultas, mas ainda
-   * no DOM (basta alterar o CSS para mostrá-las se quiser).
-   */
   function loadServiceImages() {
     document.querySelectorAll('.service-row').forEach(row => {
       const serviceNum = row.getAttribute('data-service');
@@ -178,10 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const stack = row.querySelector('.service-img-stack');
       if (!stack) return;
 
-      // Limpa o stack (caso tenha sido populado antes)
       stack.innerHTML = '';
 
-      // Cria um elemento <img> para cada imagem da lista
       images.forEach((filename, idx) => {
         const div = document.createElement('div');
         div.className = 'service-img';
@@ -198,6 +189,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /**
+   * Inicializa o carrossel de cada stack:
+   * - Marca a primeira imagem como ativa
+   * - Nas demais, marca como .next (vindo da direita)
+   * - Ao clicar em qualquer imagem, avança o carrossel
+   */
+  function initServiceCarousels() {
+    document.querySelectorAll('.service-img-stack').forEach(stack => {
+      const imgs = stack.querySelectorAll('.service-img');
+      if (imgs.length === 0) return;
+
+      // Estado
+      let current = 0;
+      const total = imgs.length;
+
+      function applyClasses() {
+        imgs.forEach((img, i) => {
+          img.classList.remove('active', 'prev', 'next');
+          if (i === current) {
+            img.classList.add('active');
+          } else if (i === (current - 1 + total) % total) {
+            img.classList.add('prev');
+          } else {
+            img.classList.add('next');
+          }
+        });
+      }
+
+      function advance() {
+        current = (current + 1) % total;
+        applyClasses();
+      }
+
+      // Clique em qualquer imagem avança
+      imgs.forEach(img => {
+        img.addEventListener('click', advance);
+      });
+
+      // Estado inicial
+      applyClasses();
+    });
+  }
+
   loadServiceImages();
+  initServiceCarousels();
 
 });

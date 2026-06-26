@@ -542,7 +542,7 @@ header.scrolled .nav-toggle span::after{ background: var(--petroleo); }
   max-width: 420px;
 }
 
-/* Imagens empilhadas */
+/* Imagens — carrossel horizontal animado */
 .service-row-images{
   position:relative;
   height: 280px;
@@ -554,6 +554,7 @@ header.scrolled .nav-toggle span::after{ background: var(--petroleo); }
   position:relative;
   width: 260px;
   height: 200px;
+  overflow:visible;
 }
 .service-img{
   position:absolute;
@@ -562,64 +563,39 @@ header.scrolled .nav-toggle span::after{ background: var(--petroleo); }
   border-radius: 8px;
   overflow:hidden;
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-  transition: all .5s cubic-bezier(.2,.8,.2,1);
   cursor:pointer;
+  top: 50%;
+  transition: all .5s cubic-bezier(.2,.8,.2,1);
 }
 .service-img img{
   width:100%;
   height:100%;
   display:block;
   object-fit:cover;
-}
-.service-img svg{
-  width:100%;
-  height:100%;
-  display:block;
+  pointer-events:none;
 }
 
-/* Posição inicial empilhada */
-.service-img[data-index="1"]{
-  top: 0;
-  left: 0;
-  z-index: 3;
-  transform: rotate(-6deg);
-}
-.service-img[data-index="2"]{
-  top: 20px;
-  left: 30px;
-  z-index: 2;
-  transform: rotate(-2deg);
-  opacity: 0.85;
-}
-.service-img[data-index="3"]{
-  top: 40px;
-  left: 60px;
-  z-index: 1;
-  transform: rotate(2deg);
-  opacity: 0.7;
-}
-
-/* Hover na linha - espalha as imagens */
-.service-row:hover .service-img[data-index="1"]{
-  transform: rotate(-8deg) translateX(-20px);
-  z-index: 3;
-}
-.service-row:hover .service-img[data-index="2"]{
-  transform: rotate(-3deg) translateX(10px);
+/* Imagem ativa (central/principal) */
+.service-img.active{
+  transform: translateX(0) translateY(-50%) scale(1);
   opacity: 1;
-  z-index: 2;
+  z-index: 3;
 }
-.service-row:hover .service-img[data-index="3"]{
-  transform: rotate(3deg) translateX(40px);
-  opacity: 0.9;
+/* Imagem anterior (à esquerda, translúcida) */
+.service-img.prev{
+  transform: translateX(-50%) translateY(-50%) scale(0.6);
+  opacity: 0.25;
+  z-index: 1;
+}
+/* Próxima imagem (à direita, translúcida) */
+.service-img.next{
+  transform: translateX(50%) translateY(-50%) scale(0.6);
+  opacity: 0.25;
   z-index: 1;
 }
 
-/* Hover em imagem individual */
 .service-img:hover{
-  transform: scale(1.08) rotate(0deg) !important;
-  z-index: 10 !important;
-  opacity: 1 !important;
+  z-index: 10;
   box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
@@ -658,9 +634,6 @@ header.scrolled .nav-toggle span::after{ background: var(--petroleo); }
     width: 160px;
     height: 120px;
   }
-  .service-img[data-index="1"]{ left: 0; }
-  .service-img[data-index="2"]{ left: 20px; }
-  .service-img[data-index="3"]{ left: 40px; }
 }
 
 /* ============ PROCESSO (faixa fina, opcional contexto) ============ */
