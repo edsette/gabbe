@@ -1022,12 +1022,12 @@ footer .wrap{
     border-color: var(--petroleo);
   }
 
-  /* Toggle button centralizado no topo quando menu aberto */
+  /* Toggle button quando menu aberto — mantém na posição original (lateral) */
   header.nav-open .nav-toggle{
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
     z-index: 300;
     background: var(--bege-claro);
     border: none;
