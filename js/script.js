@@ -204,14 +204,28 @@ document.addEventListener('DOMContentLoaded', () => {
           img.classList.remove('active', 'thumb');
           if (i === activeIdx) {
             img.classList.add('active');
+            // preserve expanded state if it was expanded
+            if (img._expanded) {
+              img.classList.add('expanded');
+            }
           } else {
             img.classList.add('thumb');
+            img.classList.remove('expanded');
+            img._expanded = false;
           }
         });
       }
 
       imgs.forEach((img, i) => {
-        img.addEventListener('click', () => layout(i));
+        img.addEventListener('click', (e) => {
+          // Se a imagem ativa for clicada, NÃO troca — deixa o handler de expand cuidar
+          if (img.classList.contains('active')) {
+            // Não chama layout, deixa o handler de expand capturar
+            return;
+          }
+          layout(i);
+          // Não propaga — o handler de expand vai verificar o estado após o layout
+        });
       });
 
       // Primeira imagem como ativa
@@ -222,4 +236,63 @@ document.addEventListener('DOMContentLoaded', () => {
   loadServiceImages();
   initServiceCarousels();
 
+  /**
+   * Demo expand da imagem ativa:
+   - Ao clicar na imagem ativa (que já está selecionada): expande (zoom leve)
+   - Ao clicar novamente na mesma expandida: recolhe
+   - Ao clicar em uma miniatura: troca a imagem e recolhe zoom
+   - Scroll ou clique fora: recolhe
+   */
+  let expandedImg = null;
+
+  document.addEventListener('click', (e) => {
+    const clickedImg = e.target.closest('.service-img');
+    if (!clickedImg) return;
+
+    // Verifica o estado ANTES do carrossel executar
+    const wasActiveBefore = clickedImg.classList.contains('active');
+
+    // Usa setTimeout para executar APÓS o handler do carrossel
+    setTimeout(() => {
+      const isActiveNow = clickedImg.classList.contains('active');
+      const isExpanded = clickedImg.classList.contains('expanded');
+
+      // Se a imagem era ativa ANTES do clique e continua ativa AGORA,
+      // significa que clicou na imagem ativa (não trocou)
+      if (wasActiveBefore && isActiveNow) {
+        if (!isExpanded) {
+          // Clicou na imagem ativa (não expandida) -> expande
+          if (expandedImg) {
+            expandedImg.classList.remove('expanded');
+            expandedImg._expanded = false;
+          }
+          clickedImg.classList.add('expanded');
+          clickedImg._expanded = true;
+          expandedImg = clickedImg;
+        } else {
+          // Clicou na imagem ativa já expandida -> recolhe
+          clickedImg.classList.remove('expanded');
+          clickedImg._expanded = false;
+          expandedImg = null;
+        }
+      } else if (!wasActiveBefore) {
+        // Clicou em uma miniatura -> troca a imagem ativa e recolhe zoom
+        if (expandedImg) {
+          expandedImg.classList.remove('expanded');
+          expandedImg._expanded = false;
+          expandedImg = null;
+        }
+        // A troca de imagem é feita pelo próprio evento do carrossel
+      }
+    }, 0);
+  });
+
+  // Scroll -> recolhe
+  window.addEventListener('scroll', () => {
+    if (expandedImg) {
+      expandedImg.classList.remove('expanded');
+      expandedImg._expanded = false;
+      expandedImg = null;
+    }
+  }, { passive: true });
 });
