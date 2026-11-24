@@ -987,6 +987,8 @@ footer .wrap{
   color: rgba(234,224,210,0.5);
   margin-top: 8px;
 }
+.footer-credit a{ text-decoration: underline; text-underline-offset: 3px; }
+.footer-credit a:hover{ color: rgba(234,224,210,0.9); }
 .footer-rule{
   border-top: 1px solid rgba(234,224,210,0.12);
   margin: 34px 0 22px;
